@@ -2,8 +2,15 @@
 #include <x86intrin.h>
 #include <stdint.h>
 #include <memory.h>
+#include <time.h>
 
-void Add(uint32_t *a, uint32_t *b, uint32_t *dst);
+#define display_int_matrix(matrix, size, title, flag) {\
+    if (title) { printf("\033[0;31m%s\033[0m", title); }\
+    for (int i = 0; i < size; i++) { printf("%6d", (matrix)[i]); if (flag && ((i + 1) % flag == 0)) { putchar(10); } }\
+    putchar(10);\
+}
+
+void add_avx(uint32_t *a, uint32_t *b, uint32_t *dst);
 
 void add(uint32_t *src1, uint32_t *src2, uint32_t *dst)
 {
@@ -12,19 +19,6 @@ void add(uint32_t *src1, uint32_t *src2, uint32_t *dst)
 
     zmm0 = _mm512_add_epi32(zmm0, zmm1);
     _mm512_store_epi32(dst, zmm0);
-}
-
-void test(uint32_t *s)
-{
-    for (int i = 0; i < 16; i++)
-    {
-        if (i && !(i & 7))
-        {
-            putchar(10);
-        }
-        printf("%4d", s[i]);
-    }
-    putchar(10);
 }
 
 int main()
@@ -47,9 +41,18 @@ int main()
     memcpy(a, data1, 16 * sizeof(int));
     memcpy(b, data2, 16 * sizeof(int));
 
-    Add(a, b, dst);
+    clock_t start;
+    clock_t finish;
+    clock_t duration;
 
-    test(dst);
+    start = clock();
+    for (int i = 0; i < 1000000000; i++)
+    {
+        add_avx(a, b, dst);
+    }
+    finish = clock();
+    duration = finish - start;
+    display_int_matrix(dst, 16, "", 8);
 
     return 0;
 }
