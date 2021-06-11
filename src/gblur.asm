@@ -1,16 +1,11 @@
-SECTION .data
-msg_format db "hello"
-number dw 0x1234
-
 SECTION .text
 
-%macro FDEC_STRIDE 4
-%endmacro
-global predict_4x4_dc_mmxext
+global Add
 
-predict_4x4_dc_mmxext:
-    mov     eax, 1234
-    mov     [rdi], ax
+; void Add(uint32_t *a, uint32_t *b, uint32_t *dst);
+Add:
+    vmovdqa32  zmm0, [rsi]
+    vpaddd     zmm0,  zmm0, [rdi]
+    vmovdqa32 [rdx],  zmm0
+    vzeroupper
     ret
-
-    
