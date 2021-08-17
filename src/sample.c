@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <x86intrin.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <memory.h>
 #include <time.h>
 
@@ -41,8 +42,8 @@ void test_hflip()
     // static uint8_t m0[16] = { 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
      static uint8_t m0[16] = { 14, 15, 12, 13, 10, 11, 8, 9, 6, 7, 4, 5, 2, 3, 0, 1 };
 
-    uint8_t *a = (uint8_t *)aligned_alloc(1920 * sizeof(int), 64);
-    uint8_t *b = (uint8_t *)aligned_alloc(1920 * sizeof(int), 64);
+    uint8_t ALIGN(a[1920], 64) = { 0 };
+    uint8_t ALIGN(b[1920], 64) = { 0 };
 
     for (int i = 0; i < 1920; i++) {
         a[i] = i;
