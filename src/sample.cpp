@@ -44,9 +44,17 @@ void Add16Intergers()
     DisplayIntergerMatrix(c, 8, "c:", 16);
 }
 
+extern "C" void MatrixMultiply();
+void TestMatrixMultiply()
+{
+    MatrixMultiply();
+}
+
+
 int main()
 {
     Add16Intergers();
+    TestMatrixMultiply();
 
     return 0;
 }
