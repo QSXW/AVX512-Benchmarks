@@ -1,1 +1,1 @@
-yum install git automake make cmake gcc gcc-c++ gdb
+yum install git automake make cmake gcc gcc-c++ gdb zlib-devel
