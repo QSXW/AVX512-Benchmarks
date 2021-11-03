@@ -1,0 +1,1 @@
+yum install git automake make cmake gcc gcc-c++ gdb
