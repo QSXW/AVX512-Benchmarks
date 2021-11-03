@@ -1,10 +1,11 @@
-#include <stdio.h>
+#include <cstdio>
+#include <cstdint>
+#include <cstdlib>
+#include <memory>
+#include <ctime>
 #include <immintrin.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <memory.h>
-#include <time.h>
 
+#include "amx.h"
 #include "sl.h"
 
 #define DisplayIntergerMatrix(matrix, size, title, flag) {\
@@ -44,12 +45,12 @@ void Add16Intergers()
     DisplayIntergerMatrix(c, 8, "c:", 16);
 }
 
-extern "C" void MatrixMultiply();
+extern "C" void MatrixMultiply(TileConfig *cfg);
 void TestMatrixMultiply()
 {
-    MatrixMultiply();
+    TileConfig cfg{};
+    MatrixMultiply(&cfg);
 }
-
 
 int main()
 {

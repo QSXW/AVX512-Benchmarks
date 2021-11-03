@@ -11,5 +11,6 @@ add_avx512:
     ret
 
 MatrixMultiply:
-    ldtilecfg [rax]
+    ldtilecfg [rdi]
+    tilerelease
     ret
